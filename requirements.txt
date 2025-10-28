@@ -1,0 +1,4 @@
+Flask
+pyjwt
+python-dotenv
+colorama
