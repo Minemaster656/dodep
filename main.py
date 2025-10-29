@@ -4,7 +4,7 @@ from app.core import db
 from app.init import app
 
 
-print(f"{Fore.GREEN}LAUNCHING {Style.BRIGHT}{Fore.MAGENTA}Do{Fore.CYAN}Dep{Fore.LIGHTBLUE_EX} 2{Style.RESET_ALL}{Fore.GREEN}...{Style.RESET_ALL}")
+print(f"{Fore.GREEN}LAUNCHING {Style.BRIGHT}{Fore.MAGENTA}Do{Fore.CYAN}Dep{Fore.MAGENTA} 2{Style.RESET_ALL}{Fore.GREEN}...{Style.RESET_ALL}")
 
 
 

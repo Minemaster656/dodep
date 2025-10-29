@@ -6,3 +6,7 @@ app.static_folder = "static"
 @app.get("/")
 def root():
     return render_template("index.html")
+
+@app.get('/auth')
+def auth_page():
+    return render_template('pages/auth.html')
