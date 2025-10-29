@@ -2,3 +2,5 @@ Flask
 pyjwt
 python-dotenv
 colorama
+flask-sock
+websockets
