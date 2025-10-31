@@ -4,3 +4,5 @@ python-dotenv
 colorama
 flask-sock
 websockets
+sqlalchemy
+alembic
