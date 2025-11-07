@@ -2,14 +2,21 @@
     --bg1: rgb(11, 15, 26);
     --bg2: rgb(17, 24, 39);
     --txt: rgb(243, 241, 255);
+    --txt1: rgb(120, 119, 126);
 
     --br: 10px;
 
     --brc: #57575733;
+    --brc1: #a39e9e42;
+
     --brw: 2px;
     --brs: solid; 
     --padding: 8px;
     --margin: 10px;
+
+    --pbg0: rgba(255, 255, 255, 0.015);
+    --pbg1: rgba(255, 255, 255, 0.05);
+
 }
 
 body {
@@ -26,7 +33,7 @@ body {
 .glass {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px); /* для Safari */
-  background-color: rgba(255, 255, 255, 0.015);
+  background-color: var(--pbg0);
   box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.15);
 }
 .panel {
@@ -35,4 +42,27 @@ body {
     padding: var(--padding);
     margin: var(--margin);
 
+}
+input[type="text"],
+input[type="password"] {
+    background-color: var(--pbg1);
+    border: var(--brw) var(--brs) var(--brc);
+    border-radius: var(--br);
+    padding: var(--padding);
+    color: var(--txt);
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: var(--brc1);
+    background-color: var(--pbg0);
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
+    color: var(--txt1);
 }

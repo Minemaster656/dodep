@@ -1,0 +1,46 @@
+#auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10vh auto;
+  padding: 10px;
+  width: fit-content;
+  height: fit-content;
+  transition: all 0.3s ease;
+}
+#logo {
+  margin: 0 auto !important;
+}
+#head {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.tab {
+  margin: 5px;
+  cursor: pointer;
+}
+.active{
+    background-color: var(--pbg1);
+    box-shadow: 0 0 10px var(--pbg1);
+}
+input{
+    margin: 10px;
+}
+#content{
+    transition: all 0.3 ease;
+}
+.tab-content {
+    display: flex; /* Добавь display: flex */
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.5s ease-in-out;
+    transform-origin: center; /* Для красивого scale */
+}
+
+.hidden {
+    scale: 0;
+    opacity: 0;
+    pointer-events: none; /* Отключает клики по скрытым элементам */
+}

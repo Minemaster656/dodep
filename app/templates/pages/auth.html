@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ДоДеп2 - ВХОД</title>
+    <link rel="stylesheet" href="/static/css/header.css" />
     {% include 'parts/head.html' %}
-</head>
-<body>
+    <link rel="stylesheet" href="/static/css/auth.css" />
+  </head>
+  <body>
     <div class="glass panel" id="auth-form">
-        <div id="head">
-            <div class="tab" id="tab-header-login">Вход</div>
-            <div class="tab" id="tab-header-register">Регистрация</div>
+      {% include 'parts/header/logo.html' %}
+      <div id="head">
+        <div class="tab panel glass active" id="tab-header-login" data-tab="login">Вход</div>
+        <div class="tab panel glass" id="tab-header-register" data-tab="register">Регистрация</div>
+      </div>
+      <hr />
+      <div id="content">
+        <div id="login" class="tab-content">
+          <input type="text" name="login-login" id="input-login-login" placeholder="Логин" />
+          <input type="password" name="login-password" id="input-login-password" placeholder="Пароль" />
         </div>
-        <div id="content">
-            <div id="login">
-                <input type="text" name="login-name" id="input-login-name">
-                <input type="password" name="login-password" id="input-login-password">
-            </div>
-            <div id="register">
-                
-            </div>
+        <div id="register" class="tab-content hidden">
+          <input type="text" name="register-login" id="input-register-login" placeholder="Логин" />
+          <input type="text" name="register-name" id="input-register-name" placeholder="Имя пользователя" />
+          <input type="password" name="register-password" id="input-register-password" placeholder="Пароль" />
         </div>
-
+      </div>
     </div>
-</body>
+    <script src="/static/js/auth_page.js"></script>
+  </body>
 </html>
