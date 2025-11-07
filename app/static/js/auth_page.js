@@ -6,12 +6,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const nameInput = document.getElementById('name');
     const passwordInput = document.getElementById('password');
     const showPasswordButton = document.getElementById('show-password-button');
+    let authButton = document.getElementById("auth-button");
+    let isRegister = false;
 
     tabs.forEach(tab => {
         tab.addEventListener('click', function() {
             tabs.forEach(t => t.classList.remove('active'));
             this.classList.add('active');
-
+            isRegister = this.dataset.tab == "register";
             if (this.dataset.tab === 'login') {
                 nameInput.classList.add('hidden');
             } else {
@@ -32,4 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (loginTab.classList.contains('active')) {
         nameInput.classList.add('hidden');
     }
+
+    authButton.addEventListener('click', async () => {
+        
+
+    })
+
+    
 });

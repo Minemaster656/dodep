@@ -46,3 +46,15 @@
 #auth-button{
     margin: 0px auto;
 }
+#result-message{
+    color: var(--txt1);
+}
+.smallprint {
+    color: var(--txt1);
+    size: 8px;
+}
+#disclaimer{
+    max-width: 50vw;
+    margin: auto;
+    text-align: center;
+}

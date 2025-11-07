@@ -11,6 +11,7 @@
   <body>
     <div class="glass panel" id="auth-form">
       {% include 'parts/header/logo.html' %}
+
       <div id="head">
         <button class="tab panel glass active" id="tab-header-login" data-tab="login">Вход</button>
         <button class="tab panel glass" id="tab-header-register" data-tab="register">Регистрация</button>
@@ -26,6 +27,16 @@
       <div id="auth-button-container">
         <button id="auth-button" class="panel">Войти</button>
       </div>
+      <p id="result-message"></p>
+      <!-- <p class="smallprint">
+        Мы не несём ответственность за всю последующую деградацию и потерянное время.<br>
+        Это СИМУЛЯТОР казино, реальных денег тут НЕТ и НЕ БУДЕТ (иначе оно было бы нелегальным)<br>
+        И помните, лудомания вредит вашему здоровью! 18+
+      </p> -->
+    </div>
+    <div id="disclaimer" class="glass panel">
+      <p style="color: gray; font-size: 0.75em">Симулятор казино. НИКАКИХ РЕАЛЬНЫХ ДЕНЕГ, ЛУДОМАНИЯ ВРЕДИТ ВАШЕМУ ЗДОРОВЬЮ, и вообще как бы 18+<br>
+    Мы не несём ответственность за дальнейшую деградацию, трату времени и нервных клеток. Всё на вашей совести! Мы вас пердупердили!</p>
     </div>
     <script src="/static/js/auth_page.js"></script>
   </body>
