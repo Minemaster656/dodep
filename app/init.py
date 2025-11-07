@@ -10,3 +10,6 @@ def root():
 @app.get('/auth')
 def auth_page():
     return render_template('pages/auth.html')
+@app.get('/readme')
+def readme_page():
+    return render_template('pages/readme.html')
