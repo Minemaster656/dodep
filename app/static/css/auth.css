@@ -33,5 +33,16 @@
 .active {
   box-shadow: 0 0 10px 2px var(--pbg1);
   background-color: var(--pbg1);
-  transition: box-shadow 0.3s ease;
+  /* transition: box-shadow 0.3s ease; */
+}
+#auth-button-container{
+    margin: 5px;
+    padding: 5px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(0.25turn, transparent, var(--pbg1), transparent);
+}
+#auth-button{
+    margin: 0px auto;
 }

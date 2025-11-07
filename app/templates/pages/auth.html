@@ -12,8 +12,8 @@
     <div class="glass panel" id="auth-form">
       {% include 'parts/header/logo.html' %}
       <div id="head">
-        <div class="tab panel glass active" id="tab-header-login" data-tab="login">Вход</div>
-        <div class="tab panel glass" id="tab-header-register" data-tab="register">Регистрация</div>
+        <button class="tab panel glass active" id="tab-header-login" data-tab="login">Вход</button>
+        <button class="tab panel glass" id="tab-header-register" data-tab="register">Регистрация</button>
       </div>
       <div id="form">
         <input type="text" name="name" id="name" placeholder="Имя" class="hidden" />
@@ -22,6 +22,9 @@
           <input type="password" name="password" id="password" placeholder="Пароль" />
           <button type="button" id="show-password-button" class="toggle-password panel glass" aria-label="Показать пароль">👓</button>
         </div>
+      </div>
+      <div id="auth-button-container">
+        <button id="auth-button" class="panel">Войти</button>
       </div>
     </div>
     <script src="/static/js/auth_page.js"></script>

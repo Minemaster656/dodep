@@ -66,3 +66,30 @@ input[type="text"]::placeholder,
 input[type="password"]::placeholder {
     color: var(--txt1);
 }
+
+button {
+    background-color: var(--pbg1);
+    border: var(--brw) var(--brs) var(--brc);
+    border-radius: var(--br);
+    padding: var(--padding);
+    color: var(--txt);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: var(--pbg0);
+    border-color: var(--brc1);
+    transform: translateY(-1px) scale(1.1);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.3);
+}
