@@ -1,27 +1,35 @@
-let tabs = document.querySelectorAll(".tab")
+document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.tab');
+    const loginTab = document.getElementById('tab-header-login');
+    const registerTab = document.getElementById('tab-header-register');
+    const loginInput = document.getElementById('login');
+    const nameInput = document.getElementById('name');
+    const passwordInput = document.getElementById('password');
+    const showPasswordButton = document.getElementById('show-password-button');
 
-tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-        const tabId = tab.dataset.tab;
-        const tabContent = document.getElementById(tabId);
-        const allTabContents = document.querySelectorAll('.tab-content');
-        
-        // Сначала скрываем все табы
-        allTabContents.forEach(content => {
-            content.classList.add('hidden');
-        });
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
 
-        // Небольшая задержка для плавного появления нового таба
-        setTimeout(() => {
-            if (tabContent) {
-                tabContent.classList.remove('hidden');
+            if (this.dataset.tab === 'login') {
+                nameInput.classList.add('hidden');
+            } else {
+                nameInput.classList.remove('hidden');
             }
-        }, 50); // 50ms достаточно для срабатывания transition
-        
-        tabs.forEach(t => {
-            t.classList.remove('active');
         });
-
-        tab.classList.add('active');
     });
+
+    showPasswordButton.addEventListener('click', function() {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    });
+
+    // Initialize
+    if (loginTab.classList.contains('active')) {
+        nameInput.classList.add('hidden');
+    }
 });

@@ -16,31 +16,22 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
-.tab {
-  margin: 5px;
-  cursor: pointer;
+.password-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
-.active{
-    background-color: var(--pbg1);
-    box-shadow: 0 0 10px var(--pbg1);
+#show-password-button {
+  margin: 0px;
+  margin-left: 5px;
 }
-input{
-    margin: 10px;
+#form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-#content{
-    transition: all 0.3 ease;
-}
-.tab-content {
-    display: flex; /* Добавь display: flex */
-    gap: 10px;
-    flex-direction: column;
-    align-items: center;
-    transition: all 0.5s ease-in-out;
-    transform-origin: center; /* Для красивого scale */
-}
-
-.hidden {
-    scale: 0;
-    opacity: 0;
-    pointer-events: none; /* Отключает клики по скрытым элементам */
+.active {
+  box-shadow: 0 0 10px 2px var(--pbg1);
+  background-color: var(--pbg1);
+  transition: box-shadow 0.3s ease;
 }

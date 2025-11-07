@@ -15,16 +15,12 @@
         <div class="tab panel glass active" id="tab-header-login" data-tab="login">Вход</div>
         <div class="tab panel glass" id="tab-header-register" data-tab="register">Регистрация</div>
       </div>
-      <hr />
-      <div id="content">
-        <div id="login" class="tab-content">
-          <input type="text" name="login-login" id="input-login-login" placeholder="Логин" />
-          <input type="password" name="login-password" id="input-login-password" placeholder="Пароль" />
-        </div>
-        <div id="register" class="tab-content hidden">
-          <input type="text" name="register-login" id="input-register-login" placeholder="Логин" />
-          <input type="text" name="register-name" id="input-register-name" placeholder="Имя пользователя" />
-          <input type="password" name="register-password" id="input-register-password" placeholder="Пароль" />
+      <div id="form">
+        <input type="text" name="name" id="name" placeholder="Имя" class="hidden" />
+        <input type="text" name="login" id="login" placeholder="Логин" />
+        <div class="password-container">
+          <input type="password" name="password" id="password" placeholder="Пароль" />
+          <button type="button" id="show-password-button" class="toggle-password panel glass" aria-label="Показать пароль">👓</button>
         </div>
       </div>
     </div>
