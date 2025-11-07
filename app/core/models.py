@@ -11,6 +11,7 @@ class User(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     deleted = Column(Integer, default=0)
     username = Column(String, nullable=False, unique=True)
+    login = Column(String, nullable=False, unique=True)
     password_hash = Column(String, nullable=False)
     created_at = Column(String, default=lambda: datetime.utcnow().isoformat())
     last_seen_at = Column(String, default=lambda: datetime.utcnow().isoformat())
@@ -29,6 +30,7 @@ class User(Base):
     top_debt = Column(Float, default=0)
     works_count = Column(Integer, default=0)
     casino_count = Column(Integer, default=0)
+    
 
 
 class Transaction(Base):

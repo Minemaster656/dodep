@@ -7,13 +7,15 @@
     {% include 'parts/head.html' %}
 </head>
 <body>
-    <div class="glass panel">
+    <div class="glass panel" id="auth-form">
         <div id="head">
-
+            <div class="tab" id="tab-header-login">Вход</div>
+            <div class="tab" id="tab-header-register">Регистрация</div>
         </div>
         <div id="content">
             <div id="login">
-
+                <input type="text" name="login-name" id="input-login-name">
+                <input type="password" name="login-password" id="input-login-password">
             </div>
             <div id="register">
                 

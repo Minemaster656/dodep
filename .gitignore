@@ -123,3 +123,4 @@ dmypy.json
 
 .env
 data.db
+logs/
