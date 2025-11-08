@@ -93,3 +93,12 @@ button:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.3);
 }
+::selection {
+    background-color: rgba(124, 58, 237, 0.3);
+    color: var(--txt);
+}
+
+::-moz-selection {
+    background-color: rgba(124, 58, 237, 0.3);
+    color: var(--txt);
+}
