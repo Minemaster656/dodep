@@ -1,6 +1,11 @@
 from flask import Flask, Blueprint, request, render_template
 from app.src.auth import auth
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
 app = Flask(__name__)
+app.secret_key = os.environ.get("APP_SECRET")
 app.static_folder = "static"
 app.register_blueprint(auth.bp)
 @app.get("/")
