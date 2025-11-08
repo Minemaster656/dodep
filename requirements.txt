@@ -6,3 +6,5 @@ flask-sock
 websockets
 sqlalchemy
 alembic
+pillow
+flask-limiter

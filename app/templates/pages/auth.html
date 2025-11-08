@@ -25,8 +25,27 @@
         </div>
       </div>
       <div id="capcha">
-        <h1 class="text-cyan-300" style="text-align: center">Докажите, что вы не бездушный скрипт бота.<br /><span class="text-red-500">Напишите симфонию.</span></h1>
-        <iframe src="https://beepbox.co" frameborder="0" style="min-width: 50vw; min-height: 50vh;"></iframe>
+
+
+        <h1 class="text-cyan-300" style="text-align: center">
+          Докажите, что вы не бездушный скрипт бота.<br /><span id="open-beepbox" class="text-red-500" style="text-decoration: underline; cursor: pointer;">Напишите симфонию.</span>
+        </h1>
+        <iframe id="beepbox" style="display: none" src="https://beepbox.co" frameborder="0" style="min-width: 50vw; min-height: 50vh"></iframe>
+        <script>
+          document.getElementById('open-beepbox').addEventListener('click', function() {
+            const beepbox = document.getElementById('beepbox');
+            if (beepbox.style.display === 'none') {
+              beepbox.style.display = 'block';
+              beepbox.style.width = "50vw";
+              beepbox.style.height = "50vh";
+            } else {
+              beepbox.style.display = 'none';
+            }
+          });
+        </script>
+        <br>
+        <h2 class="text-green-400" style="text-align: center;">А вообще просто решите капчу...</h2>
+
       </div>
       <div id="auth-button-container">
         <button id="auth-button" class="panel">Войти</button>
