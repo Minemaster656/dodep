@@ -13,7 +13,7 @@ SIZE_MAX = 6
 class CaphaInstance:
     def __init__(self):
         self.answer = "".join([random.choice(DICTIONARY) for i in range(random.randint(SIZE_MIN, SIZE_MAX))])
-        self.deadline = time.time() + 300
+        self.deadline = time.time() + 120
         self.img = self.generate_captcha()
         
     def generate_captcha(self):

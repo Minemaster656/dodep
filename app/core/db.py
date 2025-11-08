@@ -8,7 +8,7 @@ from alembic import command
 # Создание подключения
 engine = create_engine('sqlite:///data.db', echo=False)
 Session = sessionmaker(bind=engine)
-
+session = Session()
 # Проверка версии через Alembic
 alembic_cfg = Config("alembic.ini")
 
