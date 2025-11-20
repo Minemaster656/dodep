@@ -1,69 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ДоДеп2 - ВХОД</title>
-    <link rel="stylesheet" href="/static/css/header.css" />
-    {% include 'parts/head.html' %}
-    <link rel="stylesheet" href="/static/css/auth.css" />
-  </head>
-  <body>
-    <div class="glass panel" id="auth-form">
-      {% include 'parts/header/logo.html' %}
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ДоДеп2 - ВХОД</title>
+        <link rel="stylesheet" href="/static/css/header.css" />
+        {% include 'parts/head.html' %}
+        <link rel="stylesheet" href="/static/css/auth.css" />
+    </head>
+    <body>
+        <div class="glass panel" id="auth-form">
+            {% include 'parts/header/logo.html' %}
 
-      <div id="head">
-        <button class="tab panel glass active" id="tab-header-login" data-tab="login">Вход</button>
-        <button class="tab panel glass" id="tab-header-register" data-tab="register">Регистрация</button>
-      </div>
-      <div id="form">
-        <input type="text" name="name" id="name" placeholder="Имя" class="hidden" />
-        <input type="text" name="login" id="login" placeholder="Логин" />
-        <div class="password-container">
-          <input type="password" name="password" id="password" placeholder="Пароль" />
-          <button type="button" id="show-password-button" class="toggle-password panel glass" aria-label="Показать пароль">👓</button>
-        </div>
-      </div>
-      <div id="capcha">
-
-
-        <h1 class="text-cyan-300" style="text-align: center">
-          Докажите, что вы не бездушный скрипт бота.<br /><span id="open-beepbox" class="text-red-500" style="text-decoration: underline; cursor: pointer;">Напишите симфонию.</span>
-        </h1>
-        <iframe id="beepbox" style="display: none" src="https://beepbox.co" frameborder="0" style="min-width: 50vw; min-height: 50vh"></iframe>
-        <script>
-          document.getElementById('open-beepbox').addEventListener('click', function() {
-            const beepbox = document.getElementById('beepbox');
-            if (beepbox.style.display === 'none') {
-              beepbox.style.display = 'block';
-              beepbox.style.width = "50vw";
-              beepbox.style.height = "50vh";
-            } else {
-              beepbox.style.display = 'none';
-            }
-          });
-        </script>
-        <br>
-        <h2 class="text-green-400" style="text-align: center;">А вообще просто решите капчу...</h2>
-
-      </div>
-      <div id="auth-button-container">
-        <button id="auth-button" class="panel">Войти</button>
-      </div>
-      <p id="result-message"></p>
-      <!-- <p class="smallprint">
+            <div id="head">
+                <button class="tab panel glass active" id="tab-header-login" data-tab="login">Вход</button>
+                <button class="tab panel glass" id="tab-header-register" data-tab="register">Регистрация</button>
+            </div>
+            <div id="form">
+                <input type="text" name="name" id="name" placeholder="Имя" class="hidden" />
+                <input type="text" name="login" id="login" placeholder="Логин" />
+                <div class="password-container">
+                    <input type="password" name="password" id="password" placeholder="Пароль" />
+                    <button type="button" id="show-password-button" class="toggle-password panel glass" aria-label="Показать пароль">👓</button>
+                </div>
+            </div>
+            <div id="capcha">
+                <h1 class="text-cyan-300" style="text-align: center">
+                    Докажите, что вы не бездушный скрипт бота.<br /><span id="open-beepbox" class="text-red-500" style="text-decoration: underline; cursor: pointer"
+                        >Напишите симфонию.</span
+                    >
+                </h1>
+                <iframe id="beepbox" style="display: none" src="https://beepbox.co" frameborder="0" style="min-width: 50vw; min-height: 50vh"></iframe>
+                <script>
+                    document.getElementById("open-beepbox").addEventListener("click", function () {
+                        const beepbox = document.getElementById("beepbox");
+                        if (beepbox.style.display === "none") {
+                            beepbox.style.display = "block";
+                            beepbox.style.width = "50vw";
+                            beepbox.style.height = "50vh";
+                        } else {
+                            beepbox.style.display = "none";
+                        }
+                    });
+                </script>
+                <br />
+                <h2 class="text-green-400" style="text-align: center">А вообще просто решите капчу...</h2>
+                <div id="real-capcha">
+                    <img src="" alt="" id="capcha-img" style="width: 100%;">
+                    <input type="text" name="" id="capcha-text">
+                </div>
+            </div>
+            <div id="auth-button-container">
+                <button id="auth-button" class="panel">Войти</button>
+            </div>
+            <p id="result-message"></p>
+            <!-- <p class="smallprint">
         Мы не несём ответственность за всю последующую деградацию и потерянное время.<br>
         Это СИМУЛЯТОР казино, реальных денег тут НЕТ и НЕ БУДЕТ (иначе оно было бы нелегальным)<br>
         И помните, лудомания вредит вашему здоровью! 18+
       </p> -->
-    </div>
-    <div id="disclaimer" class="glass panel">
-      <p style="color: gray; font-size: 0.75em">
-        Симулятор казино. НИКАКИХ РЕАЛЬНЫХ ДЕНЕГ, ЛУДОМАНИЯ ВРЕДИТ ВАШЕМУ ЗДОРОВЬЮ, и вообще как бы 18+<br />
-        Мы не несём ответственность за дальнейшую деградацию, трату времени и нервных клеток. Всё на вашей совести! Мы вас пердупердили!<br />
-        <a href="/readme" class="text-cyan-500">Подробнее...</a>
-      </p>
-    </div>
-    <script src="/static/js/auth_page.js"></script>
-  </body>
+        </div>
+        <div id="disclaimer" class="glass panel">
+            <p style="color: gray; font-size: 0.75em">
+                Симулятор казино. НИКАКИХ РЕАЛЬНЫХ ДЕНЕГ, ЛУДОМАНИЯ ВРЕДИТ ВАШЕМУ ЗДОРОВЬЮ, и вообще как бы 18+<br />
+                Мы не несём ответственность за дальнейшую деградацию, трату времени и нервных клеток. Всё на вашей совести! Мы вас пердупердили!<br />
+                <a href="/readme" class="text-cyan-500">Подробнее...</a>
+            </p>
+        </div>
+        <script src="/static/js/auth_page.js"></script>
+    </body>
 </html>

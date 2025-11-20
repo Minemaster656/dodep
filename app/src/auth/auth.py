@@ -1,5 +1,5 @@
 from flask import Blueprint, request, session
-from app.core.capcha_service import make_capcha, check_capcha, capcha_list, CapchaCheckResponse
+from app.core.capcha_service import make_capcha, check_capcha, capcha_list, CapchaCheckResponse, requires_capcha
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from app.core.jwt_service import hash_password
@@ -22,23 +22,14 @@ limiter = Limiter(
 #     return {'message': 'Registration successful'}, 201
 
 @bp.route('/auth', methods=['POST'])
+@requires_capcha
 def login():
     data = request.get_json()
-    capcha = data.get("capcha", None)
-    UUID = session.get('capcha_uuid', None)
-    if not UUID:
-        return {"message": "unknown capcha UUID"}, 400
-    if not capcha:
-        return {"message": "no capcha answer"}, 400
-    resp = check_capcha(UUID, capcha)
-    if resp == CapchaCheckResponse.CAPCHA_INVALID:
-        return {"message": "Invalid capcha"}, 400
-    if resp == CapchaCheckResponse.INCORRECT:
-        return {"message": "Incorrect capcha answer", "user_message": "Неверный ответ капчи", "class": "text-red-400"}, 400
+    
 
     name = data.get("name", None)
-    login = request.headers.get("login", None)
-    password = request.headers.get("password", None)
+    login = data.get("login", None)
+    password = data.get("password", None)
 
     if not password or password == "":
         return {"message": "Password is null", "user_message": "Пустой пароль - слишком плохая идея.", "class": "text-red-400"}, 400
