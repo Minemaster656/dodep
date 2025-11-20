@@ -18,4 +18,5 @@ if __name__ == '__main__':
     finally:
         print(f"{Fore.RED}Exiting...{Style.RESET_ALL}")
         print(f"{Fore.RED}Goodbye, world!{Style.RESET_ALL}")
+        db.conn.close()
         
