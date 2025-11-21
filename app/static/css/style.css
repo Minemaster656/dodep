@@ -71,7 +71,7 @@ button {
     background-color: var(--pbg1);
     border: var(--brw) var(--brs) var(--brc);
     border-radius: var(--br);
-    padding: var(--padding);
+    padding: var(--padding) !important;
     color: var(--txt);
     cursor: pointer;
     transition: all 0.3s ease;

@@ -7,9 +7,12 @@ from jwt import ExpiredSignatureError, InvalidTokenError
 
 from dotenv import load_dotenv
 import os
+from functools import wraps
+from flask import request, jsonify
 
 load_dotenv()
 secret = os.getenv("JWT_SECRET")
+
 
 def hash_password(password: str) -> str:
     return sha256(password.encode()).hexdigest()
@@ -64,3 +67,20 @@ def decode_access_token(
         raise JWTError("Токен истёк")
     except InvalidTokenError as e:
         raise JWTError(f"Неверный токен: {e}")
+
+
+def requires_token(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        token = request.headers.get('Token')
+        if not token:
+            return jsonify({"error": "Token header is missing"}), 401
+
+        try:
+            payload = decode_access_token(token)
+        except JWTError as e:
+            return jsonify({"error": str(e)}), 401
+
+        request.token_payload = payload
+        return f(*args, **kwargs)
+    return decorated_function

@@ -1,0 +1,34 @@
+#account-component-logged {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+#account-name {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-bottom: -5px;
+}
+#account-login {
+    font-size: 0.75em;
+}
+.userlogin {
+    color: gray;
+}
+#account-info {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+}
+.avatar {
+    border-radius: 50%;
+    padding: 5px;
+    text-align: center;
+    background-color: purple;
+    aspect-ratio: 1/1 !important;
+}
+#account-name-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0px !important;
+}
+

@@ -66,7 +66,7 @@ authButton.addEventListener("click", async () => {
         const data = await response.json();
         response2message(data);
         if (data.token) {
-            localStorage.setItem("authToken", data.token);
+            localStorage.setItem("Token", data.token);
             localStorage.setItem("UID", data.UID);
             window.location.href = "/";
         }

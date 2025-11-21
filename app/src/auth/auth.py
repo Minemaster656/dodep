@@ -5,7 +5,7 @@ from flask_limiter.util import get_remote_address
 from app.core.jwt_service import hash_password
 from app.core import models
 from app.core import db
-from app.core.jwt_service import create_access_token, decode_access_token
+from app.core.jwt_service import create_access_token, decode_access_token, requires_token
 
 bp = Blueprint('blueprint', __name__, url_prefix="/api/v1/auth")
 limiter = Limiter(
@@ -69,12 +69,21 @@ def getcapcha():
     session['capcha_uuid'] = UUID
     return {"UUID": UUID, "img": capcha_list[UUID].img}, 200
 
-@bp.route("/fetchuser")
+
+@bp.route("/fetchuser", methods=["GET"])
 def fetchuser():
     UID = request.headers.get("UID")
-    if not UID: return {"message": "No UID :(", "user_message": "А где UID?", "class": "text-red-500"}, 400
+    if not UID:
+        return {"message": "No UID :(", "user_message": "А где UID?", "class": "text-red-500"}, 400
     conn, cur = db.get_cursor()
-    res = cur.execute("SELECT name, login, about FROM users WHERE id = ?", (UID, )).fetchone()
+    res = cur.execute(
+        "SELECT name, login, about FROM users WHERE id = ?", (UID, )).fetchone()
     if not res:
         return {"message": "User not found", "user_message": "Пользователь не найден", "class": "text-red-500"}, 404
     return {"name": res[0], "login": res[1], "about": res[2]}, 200
+
+
+@bp.get("/renewtoken")
+@requires_token
+def renew_token():
+    return {"token": create_access_token({"UID": request.token_payload["UID"]})}, 200
