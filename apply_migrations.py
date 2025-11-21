@@ -1,8 +1,9 @@
 import sqlite3
 import pathlib
 
+
 MIGRATIONS_DIR = pathlib.Path(__file__).parent / "vanilla_migrations"
-DB_PATH = pathlib.Path(__file__).parent / "db.sqlite3"
+DB_PATH = pathlib.Path(__file__).parent / "data.db"
 
 
 def get_current_version(conn: sqlite3.Connection) -> int:
@@ -20,7 +21,7 @@ def iter_migration_files():
         yield num, f
 
 
-def apply_migrations():
+def apply_migrations(logger):
     conn = sqlite3.connect(DB_PATH)
     try:
         current = get_current_version(conn)
@@ -29,7 +30,7 @@ def apply_migrations():
         for num, path in migrations:
             if num <= current:
                 continue
-
+            logger.info("MIGRATING FROM", current, "TO", num)
             sql = path.read_text(encoding="utf-8")
 
             cur = conn.cursor()

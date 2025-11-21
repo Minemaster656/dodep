@@ -12,7 +12,7 @@ app.logger.info("STARTING APP")
 
 if __name__ == '__main__':
     try:
-        apply_migrations()
+        apply_migrations(app.logger)
         print(f"{Fore.GREEN}Hello, world!{Style.RESET_ALL}")
         app.run(host="0.0.0.0", port=34778, debug=True)
         
