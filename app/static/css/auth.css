@@ -1,41 +1,42 @@
+
 #auth-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 10vh auto;
-  padding: 10px;
-  width: fit-content;
-  height: fit-content;
-  transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10vh auto;
+    padding: 10px;
+    width: fit-content;
+    height: fit-content;
+    transition: all 0.3s ease;
 }
 #logo {
-  margin: 0 auto !important;
+    margin: 0 auto !important;
 }
 #head {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 .password-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
 }
 #show-password-button {
-  margin: 0px;
-  margin-left: 5px;
+    margin: 0px;
+    margin-left: 5px;
 }
 #form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .active {
-  box-shadow: 0 0 10px 2px var(--pbg1);
-  background-color: var(--pbg1);
-  /* transition: box-shadow 0.3s ease; */
+    box-shadow: 0 0 10px 2px var(--pbg1);
+    background-color: var(--pbg1);
+    /* transition: box-shadow 0.3s ease; */
 }
-#auth-button-container{
+#auth-button-container {
     margin: 5px;
     padding: 5px;
     width: 100%;
@@ -43,18 +44,19 @@
     align-items: center;
     background: linear-gradient(0.25turn, transparent, var(--pbg1), transparent);
 }
-#auth-button{
+#auth-button {
     margin: 0px auto;
 }
-#result-message{
+#result-message {
     color: var(--txt1);
 }
 .smallprint {
     color: var(--txt1);
     size: 8px;
 }
-#disclaimer{
+#disclaimer {
     max-width: 50vw;
     margin: auto;
     text-align: center;
 }
+

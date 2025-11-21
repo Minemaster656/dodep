@@ -32,3 +32,6 @@
     gap: 0px !important;
 }
 
+.hidden {
+    display: none !important;
+}
