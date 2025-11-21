@@ -9,12 +9,12 @@ const showPasswordButton = document.getElementById("show-password-button");
 let capchaInput = document.getElementById("capcha-text");
 let authButton = document.getElementById("auth-button");
 let isRegister = false;
-const resultMessageElement = document.getElementById("result-message")
+const resultMessageElement = document.getElementById("result-message");
 
 function response2message(json_data) {
-    if (!json_data.user_message) return
-    resultMessageElement.innerText = json_data.user_message
-    resultMessageElement.className = json_data.class
+    if (!json_data.user_message) return;
+    resultMessageElement.innerText = json_data.user_message;
+    resultMessageElement.className = json_data.class;
 }
 
 tabs.forEach((tab) => {
@@ -53,7 +53,7 @@ authButton.addEventListener("click", async () => {
     if (isRegister) {
         payload.name = nameInput.value;
     }
-    console.log(payload)
+    console.log(payload);
     try {
         const response = await fetch("/api/v1/auth/auth", {
             method: "POST",
@@ -64,12 +64,12 @@ authButton.addEventListener("click", async () => {
         });
 
         const data = await response.json();
-        response2message(data)
+        response2message(data);
         if (data.token) {
             localStorage.setItem("authToken", data.token);
-            localStorage.setItem("UID", data.UID)
+            localStorage.setItem("UID", data.UID);
+            window.location.href = "/";
         }
-
     } catch (error) {
         console.error("Error during authentication:", error);
     } finally {
@@ -84,7 +84,7 @@ async function getCaptcha() {
         const data = await response.json();
         // console.log(data)
         document.getElementById("capcha-img").src = data.img;
-        response2message(data)
+        response2message(data);
         return data.uuid;
     } catch (error) {
         console.error("Error fetching captcha:", error);

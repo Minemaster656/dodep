@@ -16,3 +16,7 @@ def close_db(e=None):
     db = g.pop("db", None)
     if db is not None:
         db.close()
+
+def get_cursor():
+    conn = get_db()
+    return conn, conn.cursor()

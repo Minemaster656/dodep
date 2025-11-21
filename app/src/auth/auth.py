@@ -33,6 +33,8 @@ def login():
 
     if not password or password == "":
         return {"message": "Password is null", "user_message": "Пустой пароль - слишком плохая идея.", "class": "text-red-400"}, 400
+    if not login or login == "":
+        return {"message": "Login is null", "user_message": "Пустой логин - слишком плохая идея.", "class": "text-red-400"}, 400
 
     sha256password = hash_password(password)
 
@@ -71,3 +73,8 @@ def getcapcha():
 def fetchuser():
     UID = request.headers.get("UID")
     if not UID: return {"message": "No UID :(", "user_message": "А где UID?", "class": "text-red-500"}, 400
+    conn, cur = db.get_cursor()
+    res = cur.execute("SELECT name, login, about FROM users WHERE id = ?", (UID, )).fetchone()
+    if not res:
+        return {"message": "User not found", "user_message": "Пользователь не найден", "class": "text-red-500"}, 404
+    return {"name": res[0], "login": res[1], "about": res[2]}, 200
