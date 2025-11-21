@@ -185,14 +185,14 @@ def requires_capcha(endpoint):
         capcha = data.get("capcha", None)
         UUID = session.get('capcha_uuid', None)
         if not UUID:
-            return {"message": "unknown capcha UUID"}, 400
+            return {"message": "unknown capcha UUID", "user_message": "Капча устарела. Попробуйте ещё раз.", "class": "text-red-400"}, 400
         if not capcha:
-            return {"message": "no capcha answer"}, 400
+            return {"message": "no capcha answer", "user_message": "Отсутствует ответ капчи!", "class": "text-red-400"}, 400
         resp = check_capcha(UUID, capcha)
         if resp == CapchaCheckResponse.CAPCHA_INVALID:
-            return {"message": "Invalid capcha"}, 400
+            return {"message": "Invalid capcha", "user_message": "Неверная капча. Попробуйте ещё раз.", "class": "text-red-400"}, 400
         if resp == CapchaCheckResponse.INCORRECT:
-            return {"message": "Incorrect capcha answer", "user_message": "Неверный ответ капчи", "class": "text-red-400"}, 400
+            return {"message": "Incorrect capcha answer", "user_message": "Неверный ответ капчи!", "class": "text-red-400"}, 400
 
         return endpoint(*args, **kwargs)
     return wrapper

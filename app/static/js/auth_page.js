@@ -9,6 +9,13 @@ const showPasswordButton = document.getElementById("show-password-button");
 let capchaInput = document.getElementById("capcha-text");
 let authButton = document.getElementById("auth-button");
 let isRegister = false;
+const resultMessageElement = document.getElementById("result-message")
+
+function response2message(json_data) {
+    if (!json_data.user_message) return
+    resultMessageElement.innerText = json_data.user_message
+    resultMessageElement.className = json_data.class
+}
 
 tabs.forEach((tab) => {
     tab.addEventListener("click", function () {
@@ -57,7 +64,12 @@ authButton.addEventListener("click", async () => {
         });
 
         const data = await response.json();
-        console.log(data);
+        response2message(data)
+        if (data.token) {
+            localStorage.setItem("authToken", data.token);
+            localStorage.setItem("UID", data.UID)
+        }
+
     } catch (error) {
         console.error("Error during authentication:", error);
     } finally {
@@ -72,6 +84,7 @@ async function getCaptcha() {
         const data = await response.json();
         // console.log(data)
         document.getElementById("capcha-img").src = data.img;
+        response2message(data)
         return data.uuid;
     } catch (error) {
         console.error("Error fetching captcha:", error);

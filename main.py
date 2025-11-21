@@ -9,6 +9,9 @@ print(f"{Fore.GREEN}LAUNCHING {Style.BRIGHT}{Fore.MAGENTA}Do{Fore.CYAN}Dep{Fore.
 setup_logger(app)
 app.logger.info("STARTING APP")
 
+@app.teardown_appcontext
+def teardown_db(exception):
+    db.close_db(exception)
 
 if __name__ == '__main__':
     try:
@@ -19,5 +22,5 @@ if __name__ == '__main__':
     finally:
         print(f"{Fore.RED}Exiting...{Style.RESET_ALL}")
         print(f"{Fore.RED}Goodbye, world!{Style.RESET_ALL}")
-        db.conn.close()
+        # db.conn.close()
         
