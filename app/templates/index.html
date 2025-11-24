@@ -1,17 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ДоДеп2</title>
-    {% include 'parts/head.html' %}
-  </head>
-  <body>
-    {% include 'parts/header/header.html' %}
-    <h1 class="glass panel">Помогите</h1>
-    <div class="glass panel" style="font-size: 200em">
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor itaque, consequuntur accusantium ab quisquam nesciunt, neque laboriosam placeat, incidunt voluptatibus
-      expedita perspiciatis eligendi blanditiis animi molestiae veniam cum architecto enim?
-    </div>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ДоДеп2</title>
+        {% include 'parts/head.html' %}
+        <link rel="stylesheet" href="/static/css/pages/index.css" />
+    </head>
+    <body>
+        {% include 'parts/header/header.html' %}
+
+        <div class="grid grid-cols-3 gap-4" id="index-tiles">
+            <article class="panel glass index-tile" id="#work">
+                <h1>Работа</h1>
+                <div class="illustration-wrapper"><img src="/static/img/illustrations/oge.jpg" alt="ЭТО БУДЕТ НА ОГЭ" class="illustration" /></div>
+                <p>Попробуйте замечательную работу на самых разных видах задач!</p>
+                <p>За решение работы вы будете получать фантики.</p>
+                <p>Пока что вы будете решать несложную математику.</p>
+            </article>
+            <article class="panel glass index-tile" id="#bank">
+                <h1>Банк</h1>
+                <div class="illustration-wrapper"><img src="/static/img/illustrations/bank.jpg" alt="ЭТО БУДЕТ НА ОГЭ" class="illustration" /></div>
+                <p>Наш замечательный БАНК фантиков!</p>
+                <p>Здесь вы можете закинуть на счёт фантики или снять их.</p>
+                <p class="text-red-200">В займ фантики взять тоже можно :)</p>
+            </article>
+            <article class="panel glass index-tile" id="#casino">
+                <h1>КАЗИК</h1>
+                <div class="illustration-wrapper"><img src="/static/img/illustrations/jupiter.jpg" alt="ЭТО БУДЕТ НА ОГЭ" class="illustration" /></div>
+                <p>КАЗИНО! Депайте фантики, дёргайте ручку и надейтесь на получение ещё большего количества фантиков!</p>
+                <p>Успех, огромные суммы, азарт, додепы! Стопроцентный выигрыш!</p>
+                <p class="text-neutral-800 line-through">Осторожно, додеп времени и стопроцентный выигрыш казино</p>
+            </article>
+        </div>
+    </body>
 </html>
