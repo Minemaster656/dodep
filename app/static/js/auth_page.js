@@ -68,7 +68,9 @@ authButton.addEventListener("click", async () => {
         if (data.token) {
             localStorage.setItem("Token", data.token);
             localStorage.setItem("UID", data.UID);
-            window.location.href = "/";
+            const urlParams = new URLSearchParams(window.location.search);
+            const authReturnTo = urlParams.get('authreturnto');
+            window.location.href = authReturnTo ? authReturnTo : "/";
         }
     } catch (error) {
         console.error("Error during authentication:", error);

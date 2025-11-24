@@ -11,27 +11,41 @@
         {% include 'parts/header/header.html' %}
 
         <div class="grid grid-cols-3 gap-4" id="index-tiles">
-            <article class="panel glass index-tile" id="#work">
-                <h1>Работа</h1>
-                <div class="illustration-wrapper"><img src="/static/img/illustrations/oge.jpg" alt="ЭТО БУДЕТ НА ОГЭ" class="illustration" /></div>
-                <p>Попробуйте замечательную работу на самых разных видах задач!</p>
-                <p>За решение работы вы будете получать фантики.</p>
-                <p>Пока что вы будете решать несложную математику.</p>
-            </article>
-            <article class="panel glass index-tile" id="#bank">
-                <h1>Банк</h1>
-                <div class="illustration-wrapper"><img src="/static/img/illustrations/bank.jpg" alt="ЭТО БУДЕТ НА ОГЭ" class="illustration" /></div>
-                <p>Наш замечательный БАНК фантиков!</p>
-                <p>Здесь вы можете закинуть на счёт фантики или снять их.</p>
-                <p class="text-red-200">В займ фантики взять тоже можно :)</p>
-            </article>
-            <article class="panel glass index-tile" id="#casino">
-                <h1>КАЗИК</h1>
-                <div class="illustration-wrapper"><img src="/static/img/illustrations/jupiter.jpg" alt="ЭТО БУДЕТ НА ОГЭ" class="illustration" /></div>
-                <p>КАЗИНО! Депайте фантики, дёргайте ручку и надейтесь на получение ещё большего количества фантиков!</p>
-                <p>Успех, огромные суммы, азарт, додепы! Стопроцентный выигрыш!</p>
-                <p class="text-neutral-800 line-through">Осторожно, додеп времени и стопроцентный выигрыш казино</p>
-            </article>
+            <a href="/work" class="panel glass index-tile block" id="work">
+                <article>
+                    <h1>Работа</h1>
+                    <div class="illustration-wrapper">
+                        <img src="/static/img/illustrations/oge.jpg" alt="ЭТО БУДЕТ НА ОГЭ" class="illustration" />
+                    </div>
+                    <p>Попробуйте замечательную работу на самых разных видах задач!</p>
+                    <p>За решение работы вы будете получать фантики.</p>
+                    <p>Пока что вы будете решать несложную математику.</p>
+                </article>
+            </a>
+
+            <a href="/bank" class="panel glass index-tile block" id="bank">
+                <article>
+                    <h1>Банк</h1>
+                    <div class="illustration-wrapper">
+                        <img src="/static/img/illustrations/bank.jpg" alt="ЭТО БУДЕТ НА ОГЭ" class="illustration" />
+                    </div>
+                    <p>Наш замечательный БАНК фантиков!</p>
+                    <p>Здесь вы можете закинуть на счёт фантики или снять их.</p>
+                    <p class="text-red-200">В займ фантики взять тоже можно :)</p>
+                </article>
+            </a>
+
+            <a href="/casino" class="panel glass index-tile block" id="casino">
+                <article>
+                    <h1>КАЗИК</h1>
+                    <div class="illustration-wrapper">
+                        <img src="/static/img/illustrations/jupiter.jpg" alt="ЭТО БУДЕТ НА ОГЭ" class="illustration" />
+                    </div>
+                    <p>КАЗИНО! Депайте фантики, дёргайте ручку и надейтесь на получение ещё большего количества фантиков!</p>
+                    <p>Успех, огромные суммы, азарт, додепы! Стопроцентный выигрыш!</p>
+                    <p class="text-neutral-800 line-through">Осторожно, додеп времени и стопроцентный выигрыш казино</p>
+                </article>
+            </a>
         </div>
     </body>
 </html>

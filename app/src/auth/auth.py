@@ -7,7 +7,7 @@ from app.core import models
 from app.core import db
 from app.core.jwt_service import create_access_token, decode_access_token, requires_token
 
-bp = Blueprint('blueprint', __name__, url_prefix="/api/v1/auth")
+bp = Blueprint('auth', __name__, url_prefix="/api/v1/auth")
 limiter = Limiter(
     get_remote_address,
     # app=bp,
