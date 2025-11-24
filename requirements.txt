@@ -8,3 +8,6 @@ sqlalchemy
 alembic
 pillow
 flask-limiter
+numpy
+opensimplex
+perlin-noise
