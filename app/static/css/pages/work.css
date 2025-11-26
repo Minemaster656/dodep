@@ -1,6 +1,6 @@
 .work-container {
     width: 100vw;
-    height: 100vh;
+    height: 70vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,6 +13,9 @@
     padding: 0;
     cursor: pointer;
     position: relative; /* важно для абсолютного позиционирования частиц */
+    &:active {
+        transform: scale(1.1) !important;
+    }
 }
 
 
@@ -20,7 +23,7 @@
     display: block;
     max-width: 200px;  /* по желанию */
     height: auto;
-    
+
 }
 
 /* Базовый тег частицы (переиспользуемый) */
