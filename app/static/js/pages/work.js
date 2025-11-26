@@ -12,18 +12,36 @@ fetch("/api/v1/work/multiplier")
 
 let clickBuffer = 0;
 
+// === CPS / income per second ===
+const cpsEl = document.getElementById("cps");
+let clicksThisSecond = 0;
+
+function updateCps() {
+    if (!cpsEl) return;
+    const cps = clicksThisSecond;
+    const incomePerSecond = cps * multiplier;
+    cpsEl.textContent = `${cps.toFixed(1)} CPS \n~ +${incomePerSecond.toFixed(2)}/s`;
+    clicksThisSecond = 0;
+}
+setInterval(updateCps, 1000);
+// ================================
+
 function postClicks() {
     if (clickBuffer <= 0) {
         clickBuffer = 0;
         return;
     }
+
+    const amount = clickBuffer; // сохраняем, сколько отправляем
+    clickBuffer = 0;
+
     fetch("/api/v1/work/clicks", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             Token: localStorage.getItem("Token"),
         },
-        body: JSON.stringify({ amount: clickBuffer }),
+        body: JSON.stringify({ amount }),
     })
         .then((resp) => {
             if (!resp.ok) {
@@ -32,9 +50,15 @@ function postClicks() {
             return resp.json();
         })
         .then((data) => {
+            // считаем фактическую выплату по балансу
+            // const oldHand = typeof hand !== "undefined" ? hand : 0;
+            const gained = data.balance_hand - _hand;
+
+            // крупная частица с суммарной выплатой
+            spawnBigParticle(gained);
+
             patchHand(data.balance_hand);
         });
-    clickBuffer = 0;
 }
 
 const clickBtn = document.getElementById("clickme");
@@ -47,7 +71,6 @@ function spawnParticle(val) {
     const width = rect.width;
     const height = rect.height;
 
-    // диапазон смещения: от -0.5 до 0.5 ширины/высоты
     const offsetX = (Math.random() - 0.5) * width;
     const offsetY = (Math.random() - 0.5) * height;
 
@@ -55,15 +78,49 @@ function spawnParticle(val) {
     p.removeAttribute("id");
     p.textContent = `+${(val * multiplier).toFixed(2)}`;
 
-    // позиция от центра кнопки плюс случайное смещение
-    // центр кнопки в её системе координат: left = 50%, top = 50%
-    const baseLeft = 50 + (offsetX / width) * 400; // в процентах
-    const baseTop = 50 + (offsetY / height) * 400; // в процентах
+    const baseLeft = 50 + (offsetX / width) * 400;
+    const baseTop = 50 + (offsetY / height) * 400;
 
     p.style.left = `${baseLeft}%`;
     p.style.top = `${baseTop}%`;
 
-    // сброс/перезапуск анимации
+    p.style.animation = "none";
+    void p.offsetWidth;
+    p.style.animation = "";
+
+    clickBtn.appendChild(p);
+
+    p.addEventListener("animationend", () => {
+        p.remove();
+    });
+}
+
+// крупная частица с другим цветом и x2 размером
+function spawnBigParticle(amount) {
+    if (!particleTemplate || !clickBtn || !amount) return;
+
+    const rect = clickBtn.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+
+    const offsetX = (Math.random() - 0.5) * width * 0.3; // поменьше разброс
+    const offsetY = (Math.random() - 0.5) * height * 0.3;
+
+    const p = particleTemplate.cloneNode(true);
+    p.removeAttribute("id");
+    p.textContent = `+${amount.toFixed(2)}`;
+
+    const baseLeft = 50 + (offsetX / width) * 400;
+    const baseTop = 50 + (offsetY / height) * 400;
+
+    p.style.left = `${baseLeft}%`;
+    p.style.top = `${baseTop}%`;
+
+    // другой цвет и x2 размер
+    p.style.color = "#ffcc00";
+    p.style.fontSize = "2em";
+    p.style.textShadow = "0 0 8px rgba(255, 204, 0, 0.8)";
+
     p.style.animation = "none";
     void p.offsetWidth;
     p.style.animation = "";
@@ -77,8 +134,10 @@ function spawnParticle(val) {
 
 function clickBehaviour() {
     clickBuffer += 1;
+    clicksThisSecond += 1;
     spawnParticle(1);
 }
+
 clickBtn.addEventListener("click", () => {
     clickBehaviour();
 });
@@ -86,4 +145,5 @@ clickBtn.addEventListener("contextmenu", (e) => {
     e.preventDefault();
     clickBehaviour();
 });
+
 setInterval(postClicks, 10000);
