@@ -9,20 +9,8 @@
     <body>
         {% include 'parts/header/header.html' %}
 
-        <script>
-            fetch("/api/v1/work/task/sort/start")
-                .then((response) => response.json())
-                .then((data) => {
-                    const container = document.createElement("div");
-                    container.className = "image-container";
-                    data.images.forEach((image) => {
-                        const img = document.createElement("img");
-                        img.src = `${image}`;
-                        container.appendChild(img);
-                    });
-                    document.body.appendChild(container);
-                })
-                .catch((error) => console.error("Error fetching images:", error));
-        </script>
+        <button id="clickme">Жми!</button>
+
+        <script src="/static/js/pages/work.js"></script>
     </body>
 </html>
