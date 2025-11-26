@@ -55,7 +55,7 @@ function postClicks() {
             const gained = data.balance_hand - _hand;
 
             // крупная частица с суммарной выплатой
-            spawnBigParticle(gained);
+            spawnBigParticle(gained, data.limit);
 
             patchHand(data.balance_hand);
         });
@@ -96,14 +96,14 @@ function spawnParticle(val) {
 }
 
 // крупная частица с другим цветом и x2 размером
-function spawnBigParticle(amount) {
+function spawnBigParticle(amount, mlt) {
     if (!particleTemplate || !clickBtn || !amount) return;
 
     const rect = clickBtn.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
 
-    const offsetX = (Math.random() - 0.5) * width * 0.3; // поменьше разброс
+    const offsetX = (Math.random() - 0.5) * width * 0.3;
     const offsetY = (Math.random() - 0.5) * height * 0.3;
 
     const p = particleTemplate.cloneNode(true);
@@ -116,10 +116,36 @@ function spawnBigParticle(amount) {
     p.style.left = `${baseLeft}%`;
     p.style.top = `${baseTop}%`;
 
-    // другой цвет и x2 размер
-    p.style.color = "#ffcc00";
+    // базовые стили большой частицы
     p.style.fontSize = "2em";
     p.style.textShadow = "0 0 8px rgba(255, 204, 0, 0.8)";
+
+    if (mlt < 1) {
+        // красный оттенок для mlt < 1
+        p.style.color = "#ff4444";
+        p.style.textShadow = "0 0 8px rgba(255, 68, 68, 0.8)";
+        p.style.animationDuration = "8s !important";
+        // подпись множителя под частицей
+        let multSpan = document.createElement("div");
+        multSpan.textContent = `×${mlt.toFixed(2)}`;
+        multSpan.style.fontSize = "0.7em";
+        multSpan.style.marginTop = "0.2em";
+        multSpan.style.textAlign = "center";
+        multSpan.style.color = "#ff8888";
+        
+        p.appendChild(multSpan);
+        multSpan = document.createElement("div");
+        multSpan.textContent = `ВЫРУБИ АВТОКЛИКЕР!`;
+        multSpan.style.fontSize = "0.7em";
+        multSpan.style.marginTop = "0.2em";
+        multSpan.style.textAlign = "center";
+        multSpan.style.color = "#ff8888";
+        
+        p.appendChild(multSpan);
+    } else {
+        // как раньше: жёлтый цвет
+        p.style.color = "#ffcc00";
+    }
 
     p.style.animation = "none";
     void p.offsetWidth;

@@ -90,7 +90,7 @@ def post_clicks():
     conn.commit()
     bal = cur.execute(
         "SELECT balance_hand FROM users WHERE id = ?", (uid, )).fetchone()
-    return {"balance_hand": bal[0]}, 200
+    return {"balance_hand": bal[0], "limit": autoclicker_mlt}, 200
 
 
 @bp.get("/multiplier")
