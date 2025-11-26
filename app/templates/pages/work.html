@@ -5,11 +5,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>ДоДеп2 | Работа</title>
         {% include 'parts/head.html' %} {% include 'parts/authorizedonly.html' %}
+        <link rel="stylesheet" href="/static/css/pages/work.css" />
     </head>
     <body>
         {% include 'parts/header/header.html' %}
 
-        <button id="clickme">Жми!</button>
+        <div class="work-container">
+            <button id="clickme" class="click-button">
+                <img src="/static/img/click_button.png" alt="Жми!" />
+                <p id="cps">0</p>
+            </button>
+            <div id="particle-template" class="click-particle">+1</div>
+        </div>
 
         <script src="/static/js/pages/work.js"></script>
     </body>

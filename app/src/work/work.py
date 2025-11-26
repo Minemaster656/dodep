@@ -1,3 +1,4 @@
+import math
 from flask import Blueprint, request, session, jsonify
 from app.core.capcha_service import make_capcha, check_capcha, capcha_list, CapchaCheckResponse, requires_capcha
 from flask_limiter import Limiter
@@ -46,8 +47,8 @@ def start_sort_task():
 # UID: (time.time, amount, CPS) array of <= 5 latest
 history = {}
 
-AMOUNT_LIMITER: final = 405
-PROFIT_MULTIPLIER: final = 0.1
+AMOUNT_LIMITER: final = 145
+PROFIT_MULTIPLIER: final = 0.25
 
 
 @bp.post("/clicks")
@@ -58,8 +59,8 @@ def post_clicks():
 
     hist = history.get(uid)
     if hist is None:
-        hist = [((time.time() - 30), 0, 0)]
-    if time.time() - hist[-1][0] < 20:
+        hist = [((time.time() - 10), 0, 0)]
+    if time.time() - hist[-1][0] < 5:
         return 429
 
     data = request.get_json()
@@ -70,19 +71,26 @@ def post_clicks():
     dt = time.time() - hist[-1][0]
     cps = amount/dt
     amount_limited = min(amount, AMOUNT_LIMITER)
-
-    print(hist)
+    conn, cur = db.get_cursor()
+    autoclicker_mlt = 1
+    if amount_limited < amount:
+        name = cur.execute(
+            "SELECT name, login FROM users WHERE id = ?", (uid, )).fetchone()
+        autoclicker_mlt = 0.8/(math.log2(amount-amount_limited)/2)
+        
+        print(f"{name[0]} (@{name[1]}) suspected in autoclicker: CPS={cps}, clicked {amount} and limited by {amount-amount_limited}. Profit multiplied with {autoclicker_mlt}")
+    # print(hist)
     hist.append((time.time(), amount, cps))
     history[uid] = hist[:5]
-    print(history[uid])
+    # print(history[uid])
 
-    profit = amount_limited * PROFIT_MULTIPLIER
-    conn, cur = db.get_cursor()
+    profit = amount_limited * PROFIT_MULTIPLIER * autoclicker_mlt
     cur.execute(
         "UPDATE users SET balance_hand = balance_hand + ? WHERE id = ?", (profit, uid))
     conn.commit()
-    bal = cur.execute("SELECT balance_hand FROM users WHERE id = ?", (uid, ))
-    return {"balance_hand": bal}, 200
+    bal = cur.execute(
+        "SELECT balance_hand FROM users WHERE id = ?", (uid, )).fetchone()
+    return {"balance_hand": bal[0]}, 200
 
 
 @bp.get("/multiplier")

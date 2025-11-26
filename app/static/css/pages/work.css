@@ -1,0 +1,61 @@
+.work-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Кнопка-картинка */
+.click-button {
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    position: relative; /* важно для абсолютного позиционирования частиц */
+}
+
+
+.click-button img {
+    display: block;
+    max-width: 200px;  /* по желанию */
+    height: auto;
+    
+}
+
+/* Базовый тег частицы (переиспользуемый) */
+.click-particle {
+    position: absolute;
+    transform: translate(-50%, 0) scale(0);
+    opacity: 0;
+    pointer-events: none;
+    color: #4caf50;
+    font-weight: bold;
+    font-size: 18px;
+    animation: click-pop 1600ms ease-out forwards;
+}
+
+/* Анимация:
+   0%: opacity 0, scale 0, translateY(0)
+   50%: opacity 1, scale 1, translateY(-10px)
+   75%: opacity 1, scale 2, translateY(-15px)
+   100%: opacity 0, scale 0, translateY(-20px)
+*/
+@keyframes click-pop {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 0) scale(0);
+    }
+    50% {
+        opacity: 0.75;
+        transform: translate(-50%, -10px) scale(1);
+    }
+    75% {
+        opacity: 0.75;
+        transform: translate(-50%, -15px) scale(1.5);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -20px) scale(0);
+    }
+}
