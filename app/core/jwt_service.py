@@ -12,10 +12,11 @@ from flask import request, jsonify
 
 load_dotenv()
 secret = os.getenv("JWT_SECRET")
+SALT = os.getenv("SALT")
 
 
 def hash_password(password: str) -> str:
-    return sha256(password.encode()).hexdigest()
+    return sha256((password+SALT).encode()).hexdigest()
 
 
 class JWTError(Exception):
