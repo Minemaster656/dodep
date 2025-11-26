@@ -16,14 +16,19 @@
     &:active {
         transform: scale(1.1) !important;
     }
+    
 }
 
-
+#cps {
+    user-select: none;
+    pointer-events: none;
+}
 .click-button img {
     display: block;
     max-width: 200px;  /* по желанию */
     height: auto;
-
+    user-select: none;
+    pointer-events: none;
 }
 
 /* Базовый тег частицы (переиспользуемый) */
