@@ -22,6 +22,19 @@ const ToastManager = (() => {
         }
         return container;
     }
+    function animateStackChange(container, firstHeight) {
+        const motionOK = window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
+        if (!motionOK) return;
+
+        const last = container.offsetHeight;
+        const invert = last - firstHeight;
+        if (!invert) return;
+
+        container.animate([{ transform: `translateY(${invert}px)` }, { transform: "translateY(0)" }], {
+            duration: 180,
+            easing: "ease-out",
+        });
+    }
 
     function removeToast(record) {
         if (!record || !record.el) return;
@@ -146,8 +159,13 @@ const ToastManager = (() => {
             bodyEl.textContent = message;
             toastEl.appendChild(bodyEl);
         }
+        const firstHeight = container.offsetHeight;
 
         container.appendChild(toastEl);
+
+        if (container.children.length > 1) {
+            animateStackChange(container, firstHeight);
+        }
 
         const record = {
             el: toastEl,
@@ -163,16 +181,11 @@ const ToastManager = (() => {
         // ПОСЛЕ container.appendChild(toastEl);
 
         requestAnimationFrame(() => {
-            // на всякий случай убираем классы состояния
             toastEl.classList.remove("toast--hiding", "toast--visible");
-
-            // форсируем reflow, чтобы браузер «зафиксировал» старт:
-            // opacity: 0, transform: translateY(10px) scale(0.95)
-            // прописанные в .toast
-            void toastEl.offsetWidth;
-
-            // на следующем шаге ставим видимый стейт — теперь transition точно сработает
-            toastEl.classList.add("toast--visible");
+            void toastEl.offsetWidth; // форсируем reflow
+            requestAnimationFrame(() => {
+                toastEl.classList.add("toast--visible");
+            });
         });
 
         if (!persistent && duration > 0) {
