@@ -1,0 +1,112 @@
+#notifications {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+:root {
+    --toast-max-width: 320px;
+}
+
+/* контейнер уже есть, просто дополним */
+#notifications {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+    pointer-events: none; /* чтобы клики проходили мимо, кроме самих тостов */
+}
+
+.toast {
+    pointer-events: auto;
+    max-width: var(--toast-max-width);
+    padding: var(--padding);
+    margin: 0;
+    border-radius: var(--br);
+    border-width: var(--brw);
+    border-style: var(--brs);
+    border-color: var(--brc1);
+    background: var(--pbg1);
+    color: var(--txt);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    opacity: 0;
+    transform: translateY(10px) scale(0);
+    transition: opacity 0.18s ease-out, transform 0.18s ease-out;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.toast--visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.toast--hiding {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+}
+
+.toast-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--txt);
+}
+
+.toast-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.toast-close {
+    border: none;
+    background: transparent;
+    color: var(--txt1);
+    cursor: pointer;
+    padding: 2px 4px;
+    line-height: 1;
+    border-radius: 4px;
+    transition: background-color 0.12s ease, color 0.12s ease, opacity 0.12s ease;
+    font-size: 0.85rem;
+}
+
+.toast-close:hover {
+    background-color: var(--pbg0);
+    color: var(--txt);
+}
+
+.toast-body {
+    font-size: 0.85rem;
+    color: var(--txt1);
+}
+
+/* Цвета вариантов (используем Tailwind CDN-утилиты через классы) */
+.toast--info {
+    background-color: rgb(15 23 42 / 0.95); /* bg-slate-900/95 примерно */
+    border-color: rgb(56 189 248 / 0.6); /* border-sky-400/60 */
+}
+
+.toast--success {
+    background-color: rgb(6 78 59 / 0.95); /* bg-emerald-900/95 */
+    border-color: rgb(52 211 153 / 0.6);
+}
+
+.toast--warning {
+    background-color: rgb(120 53 15 / 0.95); /* bg-amber-900/95 */
+    border-color: rgb(251 191 36 / 0.7);
+}
+
+.toast--error {
+    background-color: rgb(127 29 29 / 0.95); /* bg-red-900/95 */
+    border-color: rgb(248 113 113 / 0.7);
+}

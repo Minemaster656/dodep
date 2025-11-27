@@ -13,8 +13,12 @@ const resultMessageElement = document.getElementById("result-message");
 
 function response2message(json_data) {
     if (!json_data.user_message) return;
-    resultMessageElement.innerText = json_data.user_message;
-    resultMessageElement.className = json_data.class;
+    // resultMessageElement.innerText = json_data.user_message;
+    // resultMessageElement.className = json_data.class;
+    createToast({
+        title: json_data.user_message,
+        headerClass: json_data.class,
+    });
 }
 
 tabs.forEach((tab) => {
@@ -69,7 +73,7 @@ authButton.addEventListener("click", async () => {
             localStorage.setItem("Token", data.token);
             localStorage.setItem("UID", data.UID);
             const urlParams = new URLSearchParams(window.location.search);
-            const authReturnTo = urlParams.get('authreturnto');
+            const authReturnTo = urlParams.get("authreturnto");
             window.location.href = authReturnTo ? authReturnTo : "/";
         }
     } catch (error) {
