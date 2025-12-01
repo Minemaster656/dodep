@@ -132,7 +132,7 @@ function spawnBigParticle(amount, mlt) {
         multSpan.style.marginTop = "0.2em";
         multSpan.style.textAlign = "center";
         multSpan.style.color = "#ff8888";
-        
+
         p.appendChild(multSpan);
         multSpan = document.createElement("div");
         multSpan.textContent = `ВЫРУБИ АВТОКЛИКЕР!`;
@@ -140,11 +140,20 @@ function spawnBigParticle(amount, mlt) {
         multSpan.style.marginTop = "0.2em";
         multSpan.style.textAlign = "center";
         multSpan.style.color = "#ff8888";
-        
+        createToast({
+            title: `Получено ${amount.toFixed(2)}`,
+            type: "warning",
+            message: `Выключите автокликер! Иножитель дохода ${mlt.toFixed(2)}`,
+        });
+
         p.appendChild(multSpan);
     } else {
         // как раньше: жёлтый цвет
         p.style.color = "#ffcc00";
+        createToast({
+            title: `Получено ${amount.toFixed(2)}`,
+            type: "info",
+        });
     }
 
     p.style.animation = "none";

@@ -3,15 +3,13 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>ДоДеп2 | Банк фантиков</title>
-        {% include 'parts/head.html' %}
-        {% include 'parts/authorizedonly.html' %}
+        <title>ДоДеп2 | Ласт-Додепас</title>
+        <link rel="icon" type="image/png" href="/static/fvi/lasdepas.png" />
+        <link rel="stylesheet" href="/static/css/pages/casino.css" />
+        {% include 'parts/head.html' %} {% include 'parts/authorizedonly.html' %}
     </head>
     <body>
         {% include 'parts/header/header.html' %}
-
-        {% include 'pages/parts/casino/dodep.html' %}
-        
-
+        <div class="grid grid-cols-3 gap-4" id="casino-grid">{% include 'pages/parts/casino/dodep.html' %}</div>
     </body>
 </html>
