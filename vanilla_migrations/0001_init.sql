@@ -21,7 +21,7 @@ CREATE TABLE transactions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     amount REAL NOT NULL,
-    type TEXT NOT NULL,
+    type TEXT NOT NULL, --WORK DODEP DEP WIN GRANDWIN
     description TEXT,
     created_at INTEGER DEFAULT (strftime('%s', 'now')),
     FOREIGN KEY (user_id) REFERENCES users(id)

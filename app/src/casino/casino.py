@@ -6,6 +6,7 @@ from app.core import db
 from app.core.jwt_service import create_access_token, decode_access_token, requires_token
 from app.core.returns import error
 from app.core.db_wrappers import get_balance
+from app.core.db_wrappers import write_transation, TransactionTypes
 
 
 bp = Blueprint('casino', __name__, url_prefix="/api/v1/casino")
@@ -24,7 +25,8 @@ def deposit():
     conn, cur = db.get_cursor()
     uid = request.token_payload["UID"]
     hand, bank, casino, debt = get_balance(uid)
-
+    if val < 5:
+        return error("Your value is less than your ...", uclass="text-red-500", umsg="Давай без микрододепов"), 400
     if hand < val:
         return error("invalid value - hand < val", uclass="text-red-400", umsg=f"Вам не хватает {val-hand} фантиков!"), 400
 
@@ -34,4 +36,6 @@ def deposit():
     cur.execute("UPDATE users SET balance_hand = ?, balance_casino = ? WHERE id = ?",
                 (hand, casino, uid))
     conn.commit()
+    write_transation(uid, val, TransactionTypes.DEP)
     return {"hand": hand, "bank": bank, "casino": casino, "debt": debt}, 200
+

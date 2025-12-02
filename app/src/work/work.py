@@ -12,6 +12,7 @@ import io
 import base64
 import time
 from typing import final
+from app.core.db_wrappers import write_transation, TransactionTypes
 
 bp = Blueprint('work', __name__, url_prefix="/api/v1/work")
 limiter = Limiter(
@@ -90,6 +91,7 @@ def post_clicks():
     conn.commit()
     bal = cur.execute(
         "SELECT balance_hand FROM users WHERE id = ?", (uid, )).fetchone()
+    write_transation(uid, profit, TransactionTypes.WORK, description=(f"CPS {cps}" if amount < amount_limited else f"CPS {cps} REDUCED"))
     return {"balance_hand": bal[0], "limit": autoclicker_mlt}, 200
 
 
