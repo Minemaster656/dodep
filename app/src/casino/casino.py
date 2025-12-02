@@ -7,7 +7,7 @@ from app.core.jwt_service import create_access_token, decode_access_token, requi
 from app.core.returns import error
 from app.core.db_wrappers import get_balance
 from app.core.db_wrappers import write_transation, TransactionTypes
-
+import datetime
 
 bp = Blueprint('casino', __name__, url_prefix="/api/v1/casino")
 
@@ -39,3 +39,28 @@ def deposit():
     write_transation(uid, val, TransactionTypes.DEP)
     return {"hand": hand, "bank": bank, "casino": casino, "debt": debt}, 200
 
+
+@bp.post("/bet/slots")
+@requires_capcha
+def bet_slots():
+    uid = request.token_payload["UID"]
+    data = request.get_json()
+    val = data.get("value")
+    try:
+        val = float(val)
+    except:
+        return error("invalid value", uclass="text-red-400", umsg=f"Некорректное значение: {val}"), 400
+
+    if val < 10:
+        return error("invalid value", uclass="text-red-400", umsg=f"Ставка должна быть больше 10 фантиков"), 400
+
+    conn, cur = db.get_cursor()
+    today = datetime.date.today()
+    cur.execute("""SELECT COUNT(*) 
+                FROM transactions
+                WHERE type = 'BET'
+                AND created_at >= strftime('%s', 'now', 'start of day')
+                AND created_at <  strftime('%s', 'now', 'start of day', '+1 day');
+                """,
+            (uid, TransactionTypes.BET, today))
+    bet_count = cur.fetchone()[0]
