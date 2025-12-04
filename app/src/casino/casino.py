@@ -41,7 +41,7 @@ def deposit():
 
 
 @bp.post("/bet/slots")
-@requires_capcha
+@requires_token
 def bet_slots():
     uid = request.token_payload["UID"]
     data = request.get_json()
@@ -55,12 +55,15 @@ def bet_slots():
         return error("invalid value", uclass="text-red-400", umsg=f"Ставка должна быть больше 10 фантиков"), 400
 
     conn, cur = db.get_cursor()
-    today = datetime.date.today()
+    # today = datetime.date.today()
     cur.execute("""SELECT COUNT(*) 
                 FROM transactions
                 WHERE type = 'BET'
                 AND created_at >= strftime('%s', 'now', 'start of day')
-                AND created_at <  strftime('%s', 'now', 'start of day', '+1 day');
+                AND created_at <  strftime('%s', 'now', 'start of day', '+1 day')
+                AND user_id = ?
                 """,
-            (uid, TransactionTypes.BET, today))
+            (uid, ))
     bet_count = cur.fetchone()[0]
+    print(bet_count)
+    return {}, 200

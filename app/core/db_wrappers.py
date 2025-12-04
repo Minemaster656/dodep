@@ -16,7 +16,7 @@ def get_balance(uid) -> Union[Tuple[float, float, float, float], None]:
 class TransactionTypes(Enum):
     WORK = "WORK"
     DODEP = "DODEP"
-    DEP = "DEP"
+    BET = "BET"
     WIN = "WIN"
     GRANDWIN = "GWIN"
 

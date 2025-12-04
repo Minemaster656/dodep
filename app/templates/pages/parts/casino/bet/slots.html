@@ -1,0 +1,19 @@
+<div class="panel glass part" id="bet-slots">
+    <button id="bet">Поставить</button>
+    <script>
+        document.getElementById("bet").addEventListener("click", () => {
+            fetch("/api/v1/casino/bet/slots", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Token: localStorage.getItem("Token"),
+                },
+                body: JSON.stringify({ value: 10 }),
+            }).then(resp => {
+                return resp.json()
+            }).then(data=>{
+                console.log(data)
+            })
+        });
+    </script>
+</div>
