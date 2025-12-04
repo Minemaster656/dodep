@@ -94,7 +94,7 @@
         // Вспомогательная функция паузы
         const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-        async function animate_response(win_row, other_rows, resultText) {
+        async function animate_response(win_row, other_rows, resultText, casinoAmount) {
             // 1. Блокируем кнопку и чистим старый результат
             betButton.disabled = true;
             resultMsg.innerHTML = ""; 
@@ -147,6 +147,7 @@
 
             // 6. Разблокируем
             betButton.disabled = false;
+            patchCasino(casinoAmount)
         }
 
         function updateSlotsVisual(rowContent) {
@@ -199,9 +200,9 @@
                 
                 // Предполагаю, что сервер может вернуть текст результата, например data.message
                 // Если нет, сформируй его тут сам
-                let resText = data.message || `Выигрыш: ${data.win_amount || 0}`; 
+                let resText = data.message || `Выигрыш: ${data.win || 0}`; 
 
-                animate_response(win_row, rows, resText);
+                animate_response(win_row, rows, resText, data.casino);
             })
             .catch((error) => {
                 console.error("Error during bet placement:", error);
