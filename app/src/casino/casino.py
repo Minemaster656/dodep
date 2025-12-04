@@ -6,8 +6,10 @@ from app.core import db
 from app.core.jwt_service import create_access_token, decode_access_token, requires_token
 from app.core.returns import error
 from app.core.db_wrappers import get_balance
-from app.core.db_wrappers import write_transation, TransactionTypes
+from app.core.db_wrappers import write_transaction, TransactionTypes
 import datetime
+
+import app.src.casino.games.slots as slots
 
 bp = Blueprint('casino', __name__, url_prefix="/api/v1/casino")
 
@@ -36,7 +38,7 @@ def deposit():
     cur.execute("UPDATE users SET balance_hand = ?, balance_casino = ? WHERE id = ?",
                 (hand, casino, uid))
     conn.commit()
-    write_transation(uid, val, TransactionTypes.DEP)
+    write_transaction(uid, val, TransactionTypes.DEP)
     return {"hand": hand, "bank": bank, "casino": casino, "debt": debt}, 200
 
 
@@ -55,6 +57,7 @@ def bet_slots():
         return error("invalid value", uclass="text-red-400", umsg=f"Ставка должна быть больше 10 фантиков"), 400
 
     conn, cur = db.get_cursor()
+    hand, bank, casino, debt = get_balance(uid)
     # today = datetime.date.today()
     cur.execute("""SELECT COUNT(*) 
                 FROM transactions
@@ -63,7 +66,37 @@ def bet_slots():
                 AND created_at <  strftime('%s', 'now', 'start of day', '+1 day')
                 AND user_id = ?
                 """,
-            (uid, ))
+                (uid, ))
     bet_count = cur.fetchone()[0]
-    print(bet_count)
-    return {}, 200
+    transaction_types_hist = cur.execute("""
+            SELECT *
+            FROM transactions
+            WHERE
+            created_at >= strftime('%s', 'now', 'start of day')
+            AND created_at <  strftime('%s', 'now', 'start of day', '+1 day')
+            AND user_id = ?
+            ORDER BY created_at DESC
+        """,
+                                         (uid, )).fetchall()
+    loses_in_row = 0
+    for t in transaction_types_hist:
+        if t == "BET":
+            loses_in_row += 1
+            continue
+        if t in ("WIN", "GWIN"):
+            break
+    casino -= val
+    win_chance_adjust = min(0.2, max(0, loses_in_row-7)*0.025)
+    win_type = slots.adjusted_roll(bet_count, win_adjust=win_chance_adjust)
+    type_mapping = {0: TransactionTypes.BET,
+                    2: TransactionTypes.WIN, 3: TransactionTypes.GRANDWIN}
+    bet_result = slots.get_result(win_type)
+    win_value = bet_result[0] * val
+    write_transaction(uid, win_value, type_mapping[win_type])
+    casino += val*bet_result[0]
+    cur.execute(
+        "UPDATE users SET balance_casino = ? WHERE id = ?", (casino, uid))
+    conn.commit()
+    rows = [" ".join(slots.get_three_weighted_unique()) for _ in range(6)]
+    return {"casino": casino, "win": val*bet_result[0], "multiplier": bet_result[0],
+            "win_row": " ".join(bet_result[1:4]), "rows": rows}, 200

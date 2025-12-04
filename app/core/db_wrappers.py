@@ -21,8 +21,8 @@ class TransactionTypes(Enum):
     GRANDWIN = "GWIN"
 
 
-def write_transation(uid: int, amount: float, type: TransactionTypes, description: str = ""):
-    cur.execute("INSERT ")
+def write_transaction(uid: int, amount: float, type: TransactionTypes, description: str = ""):
+    # cur.execute("INSERT ")
     conn, cur = get_cursor()
     cur.execute("INSERT INTO transactions (user_id, amount, type, description) VALUES (?, ?, ?, ?)",
                 (uid, amount, type.value, description))
