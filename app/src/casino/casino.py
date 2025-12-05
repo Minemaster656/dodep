@@ -38,7 +38,7 @@ def deposit():
     cur.execute("UPDATE users SET balance_hand = ?, balance_casino = ? WHERE id = ?",
                 (hand, casino, uid))
     conn.commit()
-    write_transaction(uid, val, TransactionTypes.DEP)
+    write_transaction(uid, val, TransactionTypes.DODEP)
     return {"hand": hand, "bank": bank, "casino": casino, "debt": debt}, 200
 
 
@@ -58,6 +58,13 @@ def bet_slots():
 
     conn, cur = db.get_cursor()
     hand, bank, casino, debt = get_balance(uid)
+    
+    if casino < 0:
+        return error("invalid casino balance", uclass="text-red-400", umsg="Недостаточно средств на казино балансе"), 400
+    if casino < val:
+        return error("insufficient funds", uclass="text-red-400", umsg="Недостаточно средств для ставки"), 400
+    
+    
     # today = datetime.date.today()
     cur.execute("""SELECT COUNT(*) 
                 FROM transactions
