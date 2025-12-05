@@ -102,3 +102,15 @@ button:focus {
     background-color: rgba(124, 58, 237, 0.3);
     color: var(--txt);
 }
+.hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--brc), transparent);
+    margin: var(--margin) 0;
+}
+.vhr {
+    border: none;
+    width: 2px;
+    background: linear-gradient(180deg, transparent, var(--brc), transparent);
+    margin: 0 var(--margin);
+}

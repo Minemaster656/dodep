@@ -8,8 +8,16 @@
         <link rel="icon" type="image/png" href="/static/fvi/auth.png" />
         <!--  {% include 'parts/authorizedonly.html' %} -->
         <script>
-            const target_uid = "{{ uid }}";
+            const PAGE_TARGET_UID = "{{ uid }}";
         </script>
+        <style>
+            #profile {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        </style>
     </head>
     <body>
         {% include 'parts/header/header.html' %}

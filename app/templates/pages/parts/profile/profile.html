@@ -1,0 +1,76 @@
+<style>
+    #profile {
+        padding: 10px;
+    }
+    .profile-header {
+        padding: 10px 20px;
+    }
+    #profile-name {
+        font-weight: 600;
+        font-size: 2rem;
+        /*margin-bottom: -1rem;
+        padding-bottom: 0px;
+        padding-left: 0.5rem;*/
+    }
+    #profile-login {
+        color: gray;
+        font-size: 1.2rem;
+        /*margin-top: 0px;
+        padding-top: 0px;
+        padding-left: 1rem; */
+    }
+    /*#name-section{
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+    }*/
+    #name-section {
+        margin: 0px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-left: 1rem;
+    }
+    .balance-row {
+        display: flex;
+    }
+</style>
+<div class="profile-wrapper panel glass" id="profile">
+    <div class="profile-header">
+        <div id="account-info">
+            <div id="profile-avatar" class="avatar">🚎</div>
+            <div id="name-section">
+                <div id="profile-name">test</div>
+                <div class="vhr"></div>
+                <div id="profile-login">@test1</div>
+            </div>
+        </div>
+    </div>
+    <div class="hr"></div>
+    <div class="profile-body">
+        <div id="balance">
+            <!-- (#paste>(#paste-icon-wrapper>img#paste-icon[href="/static/css/icons/bal/paste.png" alt="paste"])+#paste-text{paste})*4 -->
+
+            <div id="hand" class="balance-row">
+                <div id="hand-icon-wrapper" class="balance-row-icon"><img src="" alt="hand" id="hand-icon" href="/static/css/icons/bal/hand.png" /></div>
+                <div id="hand-text">0</div>
+            </div>
+            <div id="bank" class="balance-row" class="balance-row-icon">
+                <div id="bank-icon-wrapper"><img src="" alt="bank" id="bank-icon" href="/static/css/icons/bal/bank.png" /></div>
+                <div id="bank-text">0</div>
+            </div>
+            <div id="casino" class="balance-row">
+                <div id="casino-icon-wrapper" class="balance-row-icon"><img src="" alt="casino" id="casino-icon" href="/static/css/icons/bal/casino.png" /></div>
+                <div id="casino-text">0</div>
+            </div>
+            <div id="debt" class="balance-row" class="balance-row-icon">
+                <div id="debt-icon-wrapper"><img src="" alt="debt" id="debt-icon" href="/static/css/icons/bal/debt.png" /></div>
+                <div id="debt-text">0</div>
+            </div>
+        </div>
+        <div id="bio"></div>
+    </div>
+    <script>
+        let profile = document.getElementById("profile");
+    </script>
+</div>
