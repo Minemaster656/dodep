@@ -99,7 +99,7 @@ def bet_slots():
                     2: TransactionTypes.WIN, 3: TransactionTypes.GRANDWIN}
     bet_result = slots.get_result(win_type)
     win_value = bet_result[0] * val
-    write_transaction(uid, win_value, type_mapping[win_type])
+    write_transaction(uid, win_value if win_type != 0 else val, type_mapping[win_type])
     casino += val*bet_result[0]
     cur.execute(
         "UPDATE users SET balance_casino = ? WHERE id = ?", (casino, uid))
