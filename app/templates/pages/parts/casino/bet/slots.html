@@ -1,4 +1,4 @@
-<div class="panel glass part" id="bet-slots">
+<div class="panel glass part col-span-2" id="bet-slots">
     <style>
         /* Флекс контейнер для слотов */
         #slots-container {
@@ -24,11 +24,21 @@
 
         /* Анимация Pop + Shake */
         @keyframes popShake {
-            0% { transform: scale(1); }
-            40% { transform: scale(1.2) rotate(5deg); }
-            60% { transform: scale(1.2) rotate(-5deg); }
-            80% { transform: scale(1.1) rotate(2deg); }
-            100% { transform: scale(1) rotate(0); }
+            0% {
+                transform: scale(1);
+            }
+            40% {
+                transform: scale(1.2) rotate(5deg);
+            }
+            60% {
+                transform: scale(1.2) rotate(-5deg);
+            }
+            80% {
+                transform: scale(1.1) rotate(2deg);
+            }
+            100% {
+                transform: scale(1) rotate(0);
+            }
         }
 
         .slot.animating {
@@ -42,10 +52,16 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
+
         .controls-row {
             display: flex;
             gap: 10px;
@@ -56,9 +72,9 @@
 
     <div class="controls-row">
         <input type="number" name="" id="dep-amount-input" placeholder="Сумма" />
-        <label style="font-size: 0.8em; cursor: pointer;">
+        <!-- <label style="font-size: 0.8em; cursor: pointer;">
             <input type="checkbox" id="skip-anim-checkbox"> Быстро
-        </label>
+        </label> -->
     </div>
 
     <div id="slots-container">
@@ -66,22 +82,19 @@
         <div id="slot-1" class="slot">?</div>
         <div id="slot-2" class="slot">?</div>
     </div>
-    
+
     <!-- Контейнер для результата -->
-    <div id="result-message" style="height: 24px; margin-bottom: 10px; text-align: center;"></div>
+    <div id="result-message" style="height: 24px; margin-bottom: 10px; text-align: center"></div>
 
     <button id="bet">Поставить</button>
 
     <script>
         const depAmountInput = document.getElementById("dep-amount-input");
         const betButton = document.getElementById("bet");
-        const skipCheckbox = document.getElementById("skip-anim-checkbox");
-        const resultMsg = document.getElementById("result-message");
-        const slots = [
-            document.getElementById("slot-0"), 
-            document.getElementById("slot-1"), 
-            document.getElementById("slot-2")
-        ];
+        //const skipCheckbox = document.getElementById("skip-anim-checkbox");
+        let resultMsg = document.getElementById("result-message");
+        const slots = [document.getElementById("slot-0"), document.getElementById("slot-1"), document.getElementById("slot-2")];
+
 
         function validateSlotBetAmountInput() {
             if (isNaN(depAmountInput.value) || +depAmountInput.value < 10) {
@@ -92,31 +105,22 @@
         depAmountInput.addEventListener("input", validateSlotBetAmountInput);
 
         // Вспомогательная функция паузы
-        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-        async function animate_response(win_row, other_rows, resultText, casinoAmount) {
+        async function animate_response(win_row, other_rows, resultText, casinoAmount, resultTextClass) {
             // 1. Блокируем кнопку и чистим старый результат
             betButton.disabled = true;
-            resultMsg.innerHTML = ""; 
-            resultMsg.className = ""; // Сброс анимации текста
+            resultMsg.innerHTML = "";
+            resultMsg.className = resultTextClass || ""; // Сброс анимации текста
 
             // 2. Настраиваем задержки
             // Полный цикл: 3x0.2, 3x0.3, 3x0.4, 3x0.5, 2x0.6, 2x0.75, 2x0.9, 1x1.15
-            const fullDelays = [
-                0.2, 0.2, 0.2, 
-                0.3, 0.3, 0.3, 
-                0.4, 0.4, 0.4, 
-                0.5, 0.5, 0.5, 
-                0.6, 0.6, 
-                0.75, 0.75, 
-                0.9, 0.9, 
-                1.15
-            ];
-            
+            const fullDelays = [0.2, 0.2, 0.2, 0.3, 0.3, 0.3, 0.4, 0.4, 0.4, 0.5, 0.5, 0.5, 0.6, 0.6, 0.75, 0.75, 0.9, 0.9, 1.15];
+
             // Скип цикл (как ты просил, укороченный)
             const skipDelays = [0.2, 0.3, 0.4, 0.5];
 
-            const currentDelays = skipCheckbox.checked ? skipDelays : fullDelays;
+            const currentDelays = skipDelays; //skipCheckbox.checked ? skipDelays : fullDelays;
 
             // 3. Цикл анимации "прокрутки"
             for (let i = 0; i < currentDelays.length; i++) {
@@ -131,14 +135,14 @@
                 }
 
                 updateSlotsVisual(rowToShow);
-                
+
                 // Ждем указанное время
                 await sleep(currentDelays[i] * 1000);
             }
 
             // 4. Финальный аккорд - показываем win_row
             updateSlotsVisual(win_row);
-            
+
             // 5. Показываем текст результата
             if (resultText) {
                 resultMsg.textContent = resultText;
@@ -147,18 +151,18 @@
 
             // 6. Разблокируем
             betButton.disabled = false;
-            patchCasino(casinoAmount)
+            patchCasino(casinoAmount);
         }
 
         function updateSlotsVisual(rowContent) {
             slots.forEach((slot, index) => {
                 // Сброс анимации (трюк с offsetWidth вызывает reflow)
                 slot.classList.remove("animating");
-                void slot.offsetWidth; 
-                
+                void slot.offsetWidth;
+
                 // Меняем текст
                 slot.textContent = rowContent[index];
-                
+
                 // Запускаем анимацию
                 slot.classList.add("animating");
             });
@@ -166,57 +170,71 @@
 
         betButton.addEventListener("click", () => {
             validateSlotBetAmountInput();
-            
+
             // Скрываем предыдущий результат при новом запросе
-            resultMsg.style.opacity = "0"; 
+            resultMsg.style.opacity = "0";
 
             fetch("/api/v1/casino/bet/slots", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Token": localStorage.getItem("Token"),
+                    Token: localStorage.getItem("Token"),
                 },
                 body: JSON.stringify({ value: depAmountInput.value }),
             })
-            .then((resp) => {
-                // Важно: прокидываем статус дальше, так как resp недоступен в следующем then
-                if (resp.status !== 200 && resp.status !== 400) {
-                    throw new Error(`Request failed with status ${resp.status}`);
-                }
-                return resp.json().then(data => ({ status: resp.status, data: data }));
-            })
-            .then(({ status, data }) => {
-                if (status === 400) {
-                     // Предполагаю, что response2message у тебя определена где-то глобально
-                    if(typeof response2message === 'function') response2message(data);
-                    else console.warn("response2message not defined");
-                    betButton.disabled = false; // На всякий случай разблокируем, если 400
-                    return;
-                }
+                .then((resp) => {
+                    // Важно: прокидываем статус дальше, так как resp недоступен в следующем then
+                    if (resp.status !== 200 && resp.status !== 400) {
+                        throw new Error(`Request failed with status ${resp.status}`);
+                    }
+                    return resp.json().then((data) => ({ status: resp.status, data: data }));
+                })
+                .then(({ status, data }) => {
+                    if (status === 400) {
+                        // Предполагаю, что response2message у тебя определена где-то глобально
+                        if (typeof response2message === "function") response2message(data);
+                        else console.warn("response2message not defined");
+                        betButton.disabled = false; // На всякий случай разблокируем, если 400
+                        return;
+                    }
 
-                // Парсим данные
-                let rows = data.rows.map((row) => row.split(" ")); // other_rows
-                let win_row = data.win_row.split(" ");
-                
-                // Предполагаю, что сервер может вернуть текст результата, например data.message
-                // Если нет, сформируй его тут сам
-                let resText = data.message || `Выигрыш: ${data.win || 0}`; 
+                    // Парсим данные
+                    let rows = data.rows.map((row) => row.split(" ")); // other_rows
+                    let win_row = data.win_row.split(" ");
 
-                animate_response(win_row, rows, resText, data.casino);
-            })
-            .catch((error) => {
-                console.error("Error during bet placement:", error);
-                // Функция тоста тоже видимо внешняя
-                if(typeof createToast === 'function') {
-                    createToast({
-                        type: "error",
-                        title: "Ошибка",
-                        message: error.message || error,
-                    });
-                }
-                betButton.disabled = false; // Разблокируем при ошибке
-                resultMsg.style.opacity = "1"; // Вернем видимость если была ошибка
-            });
+                    // Предполагаю, что сервер может вернуть текст результата, например data.message
+                    // Если нет, сформируй его тут сам
+                    let resText = data.message || `Выигрыш: ${data.win || 0}`;
+
+                    let resultClass = "";
+                    if (data.win < 0) {
+                        resultClass = "text-red-400";
+                    } else if (data.win == 0) {
+                        resultClass = "text-amber-400";
+                    } else {
+                        resultClass = data.win_type == 3 ? "text-magenta-400" : "text-green-400";
+                    }
+                    //resultMsg.classList.remove("text-red-400");
+                    //resultMsg.classList.remove("text-amber-400");
+                    //resultMsg.classList.remove("text-magenta-400");
+                    //resultMsg.classList.remove("text-green-400");
+                    //resultMsg.classList.add(resultClass);
+                    // = `fade-in-text ${resultClass}`;
+                    animate_response(win_row, rows, resText, data.casino, resultClass);
+                })
+                .catch((error) => {
+                    console.error("Error during bet placement:", error);
+                    // Функция тоста тоже видимо внешняя
+                    if (typeof createToast === "function") {
+                        createToast({
+                            type: "error",
+                            title: "Ошибка",
+                            message: error.message || error,
+                        });
+                    }
+                    betButton.disabled = false; // Разблокируем при ошибке
+                    resultMsg.style.opacity = "1"; // Вернем видимость если была ошибка
+                });
         });
     </script>
 </div>

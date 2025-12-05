@@ -106,4 +106,4 @@ def bet_slots():
     conn.commit()
     rows = [" ".join(slots.get_three_weighted_unique()) for _ in range(6)]
     return {"casino": casino, "win": val*bet_result[0], "multiplier": bet_result[0],
-            "win_row": " ".join(bet_result[1:4]), "rows": rows}, 200
+            "win_row": " ".join(bet_result[1:4]), "rows": rows, "win_type": win_type}, 200
