@@ -3,18 +3,16 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {% include 'parts/head.html' %}
         <title>{{ name }} в ДоДеп2</title>
         <link rel="icon" type="image/png" href="/static/fvi/auth.png" />
-
-        <!-- {% include 'parts/head.html' %} {% include 'parts/authorizedonly.html' %} -->
+        <!--  {% include 'parts/authorizedonly.html' %} -->
+        <script>
+            const target_uid = "{{ uid }}";
+        </script>
     </head>
     <body>
-        <script>
-            const target_uid = "{{ uid }}"
-        </script>
         {% include 'parts/header/header.html' %}
-        <div id="profile">
-            {% include 'pages/parts/profile/profile.html' %}
-        </div>
+        <div id="profile">{% include 'pages/parts/profile/profile.html' %}</div>
     </body>
 </html>

@@ -97,13 +97,13 @@
             <div class="text-content">
                 <h1 class="text-red-600 text-6xl font-bold mb-4" id="404memetext">ОКАК</h1>
                 <h2 class="text-red-400 text-2xl mb-6">
-                    страница не найдена :(<br />
+                    {{ message if message else 'Страница не найдена :(' }}<br />
                     <a href="/" class="text-blue-600 underline hover:text-blue-400">на главную</a>
                 </h2>
             </div>
         </div>
         <script>
-
+        
         const variants = [
             {
                 img: '/static/img/404page/okak.webp',
