@@ -3,6 +3,7 @@ from app.src.auth import auth
 from app.src.work import work
 from app.src.bank import bank
 from app.src.casino import casino
+from app.src.other import other
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -14,6 +15,8 @@ app.register_blueprint(auth.bp)
 app.register_blueprint(work.bp)
 app.register_blueprint(bank.bp)
 app.register_blueprint(casino.bp)
+app.register_blueprint(other.bp)
+app.register_blueprint(other.bp_nopref)
 
 
 @app.get("/")
@@ -44,3 +47,8 @@ def bank_page():
 @app.get('/casino')
 def casino_page():
     return render_template('pages/casino.html')
+
+@app.errorhandler(404)
+def page_not_found(e):
+    print(e)
+    return render_template('pages/404.html')
