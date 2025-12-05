@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>404 | ДоДеп2</title>
+        <link rel="icon" type="image/png" href="/static/fvi/404.png" />
+        {% include 'parts/head.html' %}
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #000;
+                overflow: hidden;
+                position: relative;
+            }
+
+            .background-image {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                z-index: 0;
+                opacity: 0;
+                animation: fadeInSlow 3s ease-in forwards;
+                animation-delay: 1s;
+            }
+
+            .content-wrapper {
+                position: relative;
+                z-index: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .main-image {
+                image-rendering: pixelated;
+                image-rendering: -moz-crisp-edges;
+                image-rendering: crisp-edges;
+                max-width: 90vw;
+                max-height: 50vh;
+                opacity: 0;
+                animation: fadeIn 0.8s ease-in forwards;
+                width: 50%;
+            }
+
+            .text-content {
+                text-align: center;
+                margin-top: 2rem;
+                opacity: 0;
+                animation: fadeIn 0.6s ease-in forwards;
+                animation-delay: 0.5s;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes fadeInSlow {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 0.3;
+                }
+            }
+
+            a {
+                transition: opacity 0.2s;
+            }
+
+            a:hover {
+                opacity: 0.8;
+            }
+        </style>
+    </head>
+    <body>
+        {% include 'parts/header/header.html' %}
+        <img src="/static/img/404page/okak.webp" alt="" class="background-image" id="bg-image"/>
+
+        <div class="content-wrapper">
+            <img src="/static/fvi/404.png" alt="404" class="main-image" />
+
+            <div class="text-content">
+                <h1 class="text-red-600 text-6xl font-bold mb-4" id="404memetext">ОКАК</h1>
+                <h2 class="text-red-400 text-2xl mb-6">
+                    страница не найдена :(<br />
+                    <a href="/" class="text-blue-600 underline hover:text-blue-400">на главную</a>
+                </h2>
+            </div>
+        </div>
+        <script>
+
+        const variants = [
+            {
+                img: '/static/img/404page/okak.webp',
+                text: 'ОКАК',
+                weight: 8
+            },
+            {
+                img: '/static/img/404page/vriadli.jpg',
+                text: 'Эта страница - врядли есть',
+                weight: 1
+            },
+            {
+                img: '/static/img/404page/prorvemsa.jpg',
+                text: 'ПРОРВЕМСЯ',
+                weight: 1
+            },
+            //{
+            //    img: '/static/img/404page/nebaluisa.jpg',
+            //    text: 'Не балуйся'
+            //},
+            {
+                img: '/static/img/404page/inogda.jpg',
+                text: 'Иногода случается',
+                weight: 2
+            },
+            {
+                img: '/static/img/404page/dumaite.jpg',
+                text: 'Думайте',
+                weight: 2
+            },
+            {
+                img: '/static/img/404page/besitkogdagovorat.jpg',
+                text: 'Бесит, когда говорят это',
+                weight: 1
+            },
+            {
+                img: '/static/img/404page/beshparmak.jpg',
+                text: 'Бешпармак',
+                weight: 1
+            }
+        ];
+
+        const weightedRandom = () => {
+            const totalWeight = variants.reduce((sum, variant) => sum + (variant.weight || 1), 0);
+            const random = Math.random() * totalWeight;
+            let cumulativeWeight = 0;
+
+            for (const variant of variants) {
+                cumulativeWeight += variant.weight || 1;
+                if (random < cumulativeWeight) {
+                    return variant;
+                }
+            }
+
+            return variants[0];
+        };
+
+        const hasShownOkak = localStorage.getItem('hasShownOkak');
+        let randomPick;
+
+        if (!hasShownOkak) {
+            randomPick = variants[0];
+            localStorage.setItem('hasShownOkak', 'true');
+        } else {
+            randomPick = weightedRandom();
+        }
+
+        document.getElementById('bg-image').src = randomPick.img;
+        document.getElementById('404memetext').innerText = randomPick.text;
+    </script>
+    </body>
+</html>
